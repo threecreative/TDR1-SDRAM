@@ -4,7 +4,7 @@ import math, json
 out = {}
 
 # ---------- 1. Snelheidsklassen ----------
-bins = [7200, 8400, 9600, 10800]
+bins = [7200, 8400, 9600, 10800, 21600]   # 21600 = toekomstklasse (rev 0.2.0)
 DATA_BITS = 64            # 2 subkanalen x 32 DQ
 BL, DATA_BEATS = 18, 16   # BL18: 16 data + 2 ECC-beats
 speed = []
@@ -77,7 +77,10 @@ for name, fn in [("DDR5-6400 (non-ECC)", lambda: ddr5(6400)),
                  ("DDR5-9600 (non-ECC, hypothetisch)", lambda: ddr5(9600)),
                  ("DDR5-9600 ECC (80-bit)", lambda: ddr5(9600, ecc=True)),
                  ("TDR1-9600 BL18 (met ECC)", lambda: tdr1(9600)),
-                 ("TDR1-9600 BL16P (zonder ECC)", lambda: tdr1(9600, "BL16P"))]:
+                 ("TDR1-9600 BL16P (zonder ECC)", lambda: tdr1(9600, "BL16P")),
+                 ("TDR1-10800 BL18 (met ECC)", lambda: tdr1(10800)),
+                 ("DDR5-21600 (non-ECC, hypothetisch)", lambda: ddr5(21600)),
+                 ("TDR1-21600 BL18 (met ECC)", lambda: tdr1(21600))]:
     t, parts = fn()
     energy[name] = dict(total=t, parts=parts)
 out["energy"] = energy
@@ -88,7 +91,7 @@ out["tdr_vs_ddr5ecc_pct"] = round((energy["TDR1-9600 BL18 (met ECC)"]["total"]/r
 
 # Vermogen I/O+kern bij volle bandbreedte (W per module) = pJ/bit * Gbit/s
 for k, v in energy.items():
-    mts = 6400 if "6400" in k else 9600
+    mts = int(k.split("-")[1].split(" ")[0])
     data_gbps = mts*64/1000 * (16/18 if "BL18" in k else 1)
     v["module_W_at_full_bw"] = round(v["total"]*data_gbps/1000, 2)
     v["GBs_per_W"] = round((data_gbps/8)/v["module_W_at_full_bw"], 1)

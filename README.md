@@ -2,7 +2,7 @@
 
 **TDR1 (Triple Data Rate) SDRAM** is a concept memory design that moves **three data transfers per clock period** instead of two. It is drawn up as a JEDEC-style DIMM that could sit alongside DDR5.
 
-> Status: concept, blueprint revision **0.1.0** (2026-10-16). This is not an existing standard. Performance and energy figures come from a calculation model, not from measurements.
+> Status: concept, blueprint revision **0.2.0** (2026-10-17; sheets rev 0.1.0). This is not an existing standard. Performance and energy figures come from a calculation model, not from measurements.
 
 ## Blueprint sheets
 
@@ -25,7 +25,8 @@ The full page with all sheets and tables is [`blueprint/TDR1-blueprint-en.html`]
 | Item | TDR1 |
 | --- | --- |
 | Signalling | One external clock; a DLL in each chip derives three phases. One NRZ bit per data pin per phase. |
-| Speed bins | TDR1-7200, 8400, 9600, 10800 MT/s |
+| Speed bins | TDR1-7200, 8400, 9600, 10800 MT/s, plus the future bin TDR1-21600 |
+| TDR1-21600 (future) | 7200 MHz clock, 172.8 GB/s raw, 153.6 GB/s data per module: 3.4× DDR5-6400. 46 ps per bit, so it needs CAMM2 or soldered memory; ≈20 W per module with a heat spreader |
 | TDR1-9600 | 3200 MHz clock (DDR5 needs 4800 MHz for 9600 MT/s), 76.8 GB/s raw, 68.3 GB/s data per module |
 | Burst | BL18 = 16 data + 2 ECC transfers = exactly 6 clock periods |
 | ECC | 16 check bits per 128 data bits per chip (9 SEC-DED + 7 CRC), on every module, no extra chips |
@@ -40,6 +41,7 @@ The full page with all sheets and tables is [`blueprint/TDR1-blueprint-en.html`]
 - The three phases must match to within about 2% of a bit time.
 - TDR1 needs a new memory controller with a 3-phase PHY.
 - The 70.50 mm key position has not been checked against the JEDEC mechanical drawings.
+- TDR1-21600 is beyond what a plug-in DIMM can do today; at that speed the energy per bit rises to ≈16.1 pJ (still ≈9% below a hypothetical DDR5-21600).
 
 ## Tools
 

@@ -2,7 +2,8 @@
 import json, re
 EN = {"DDR5-6400 (non-ECC)": "DDR5-6400 (non-ECC)", "DDR5-9600 (non-ECC, hypothetisch)": "DDR5-9600 (non-ECC, hypothetical)",
       "DDR5-9600 ECC (80-bit)": "DDR5-9600 ECC (80-bit)", "TDR1-9600 BL18 (met ECC)": "TDR1-9600 BL18 (with ECC)",
-      "TDR1-9600 BL16P (zonder ECC)": "TDR1-9600 BL16P (no ECC)",
+      "TDR1-9600 BL16P (zonder ECC)": "TDR1-9600 BL16P (no ECC)", "TDR1-10800 BL18 (met ECC)": "TDR1-10800 BL18 (with ECC)",
+      "DDR5-21600 (non-ECC, hypothetisch)": "DDR5-21600 (non-ECC, hypothetical)", "TDR1-21600 BL18 (met ECC)": "TDR1-21600 BL18 (with ECC)",
       "DQ (2x32)": "DQ (2x32)", "DQS_t/DQS_c (8 paren)": "DQS_t/DQS_c (8 pairs)", "CA (2x10, DDR)": "CA (2x10, DDR)",
       "CS_n (2 per subkanaal)": "CS_n (2 per subchannel)", "CK_t/CK_c ingang naar TCKD": "CK_t/CK_c input to TCKD",
       "PAR (CA-pariteit)": "PAR (CA parity)", "HSCL/HSDA/HSA (I3C zijband)": "HSCL/HSDA/HSA (I3C sideband)",
@@ -89,7 +90,7 @@ footer {{ font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bo
 <div class="wrap">
 <header>
   <div><p class="eyebrow">Concept specification · Triple Data Rate</p><h1>TDR1 SDRAM</h1></div>
-  <div class="rev">REV 0.1.0<br>2026-10-16<br>STATUS: CONCEPT</div>
+  <div class="rev">REV 0.2.0<br>2026-10-17<br>STATUS: CONCEPT</div>
   <p class="lede">Main memory that moves <b>three</b> data transfers per clock period. One external clock, three internal phases at 0°, 120° and 240°, and ECC built into every burst. Laid out as a JEDEC-style module that can sit alongside DDR5.</p>
 </header>
 
@@ -126,6 +127,7 @@ footer {{ font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bo
     <thead><tr><th>Bin</th><th>CK MHz</th><th>DDR5 clock at same MT/s</th><th>UI ps</th><th>Raw GB/s</th><th>Data GB/s (BL18)</th><th>Burst ns</th></tr></thead>
     <tbody>{speed_rows}</tbody></table></div>
   <p class="muted">GB/s per module with 64 data pins. The ECC beats cost 11% of bandwidth. In exchange, a DDR5 ECC module needs 80 pins and 10 chips for the same 64 data bits.</p>
+  <p class="note"><b>TDR1-21600 is a future bin.</b> A bit lasts 46 ps there, less than half that of today's fastest DDR5. A normal plug-in module cannot do that: it needs CAMM2 or memory soldered right next to the processor, as GDDR7 does (32 Gb/s per pin). According to the model the module then draws about 20 W and needs a heat spreader.</p>
 </section>
 
 <section>
@@ -162,7 +164,7 @@ footer {{ font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bo
   </ul>
 </section>
 
-<footer>TDR1 SDRAM · blueprint rev 0.1.0 · Concept design, not an existing standard. Figures come from a calculation model; assumptions are stated.</footer>
+<footer>TDR1 SDRAM · blueprint rev 0.2.0 (sheets rev 0.1.0) · Concept design, not an existing standard. Figures come from a calculation model; assumptions are stated.</footer>
 </div>
 """
 open("TDR1-blueprint-en.html", "w").write(html)

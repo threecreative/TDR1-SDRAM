@@ -55,7 +55,7 @@ footer { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bor
 <div class="wrap">
 <header>
   <div><p class="eyebrow">Concept specification · Triple Data Rate</p><h1>TDR1 SDRAM</h1></div>
-  <div class="rev">REV 0.1.0<br>2026-10-16<br>STATUS: CONCEPT</div>
+  <div class="rev">REV 0.2.0<br>2026-10-17<br>STATUS: CONCEPT</div>
   <p class="lede">Main memory that moves <b>three</b> data transfers per clock period. One external clock, three internal phases at 0°, 120° and 240°, and ECC built into every burst. Laid out as a JEDEC-style module that can sit alongside DDR5.</p>
 </header>
 
@@ -90,15 +90,16 @@ footer { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bor
   <h2><small>TABLE A</small>Speed bins</h2>
   <div class="tbl"><table>
     <thead><tr><th>Bin</th><th>CK MHz</th><th>DDR5 clock at same MT/s</th><th>UI ps</th><th>Raw GB/s</th><th>Data GB/s (BL18)</th><th>Burst ns</th></tr></thead>
-    <tbody><tr><td>TDR1-7200</td><td>2400</td><td>3600</td><td>138.9</td><td>57.6</td><td>51.2</td><td>2.50</td></tr><tr><td>TDR1-8400</td><td>2800</td><td>4200</td><td>119.0</td><td>67.2</td><td>59.7</td><td>2.14</td></tr><tr><td>TDR1-9600</td><td>3200</td><td>4800</td><td>104.2</td><td>76.8</td><td>68.3</td><td>1.88</td></tr><tr><td>TDR1-10800</td><td>3600</td><td>5400</td><td>92.6</td><td>86.4</td><td>76.8</td><td>1.67</td></tr></tbody></table></div>
+    <tbody><tr><td>TDR1-7200</td><td>2400</td><td>3600</td><td>138.9</td><td>57.6</td><td>51.2</td><td>2.50</td></tr><tr><td>TDR1-8400</td><td>2800</td><td>4200</td><td>119.0</td><td>67.2</td><td>59.7</td><td>2.14</td></tr><tr><td>TDR1-9600</td><td>3200</td><td>4800</td><td>104.2</td><td>76.8</td><td>68.3</td><td>1.88</td></tr><tr><td>TDR1-10800</td><td>3600</td><td>5400</td><td>92.6</td><td>86.4</td><td>76.8</td><td>1.67</td></tr><tr><td>TDR1-21600</td><td>7200</td><td>10800</td><td>46.3</td><td>172.8</td><td>153.6</td><td>0.83</td></tr></tbody></table></div>
   <p class="muted">GB/s per module with 64 data pins. The ECC beats cost 11% of bandwidth. In exchange, a DDR5 ECC module needs 80 pins and 10 chips for the same 64 data bits.</p>
+  <p class="note"><b>TDR1-21600 is a future bin.</b> A bit lasts 46 ps there, less than half that of today's fastest DDR5. A normal plug-in module cannot do that: it needs CAMM2 or memory soldered right next to the processor, as GDDR7 does (32 Gb/s per pin). According to the model the module then draws about 20 W and needs a heat spreader.</p>
 </section>
 
 <section>
   <h2><small>TABLE B</small>Timings in clock periods</h2>
   <div class="tbl"><table>
     <thead><tr><th>Bin</th><th>CL (ns)</th><th>tRCD</th><th>tRP</th><th>tRAS</th><th>CWL</th><th>DDR5 CL at same MT/s</th></tr></thead>
-    <tbody><tr><td>TDR1-7200</td><td>40 <small>(16.67)</small></td><td>39</td><td>39</td><td>77</td><td>38</td><td>58</td></tr><tr><td>TDR1-8400</td><td>46 <small>(16.43)</small></td><td>45</td><td>45</td><td>90</td><td>44</td><td>68</td></tr><tr><td>TDR1-9600</td><td>52 <small>(16.25)</small></td><td>52</td><td>52</td><td>103</td><td>50</td><td>77</td></tr><tr><td>TDR1-10800</td><td>58 <small>(16.11)</small></td><td>58</td><td>58</td><td>116</td><td>56</td><td>87</td></tr></tbody></table></div>
+    <tbody><tr><td>TDR1-7200</td><td>40 <small>(16.67)</small></td><td>39</td><td>39</td><td>77</td><td>38</td><td>58</td></tr><tr><td>TDR1-8400</td><td>46 <small>(16.43)</small></td><td>45</td><td>45</td><td>90</td><td>44</td><td>68</td></tr><tr><td>TDR1-9600</td><td>52 <small>(16.25)</small></td><td>52</td><td>52</td><td>103</td><td>50</td><td>77</td></tr><tr><td>TDR1-10800</td><td>58 <small>(16.11)</small></td><td>58</td><td>58</td><td>116</td><td>56</td><td>87</td></tr><tr><td>TDR1-21600</td><td>116 <small>(16.11)</small></td><td>116</td><td>116</td><td>231</td><td>114</td><td>173</td></tr></tbody></table></div>
   <p class="muted">The core has the same latency as DDR5-class memory (assumption: tAA, tRCD and tRP ≈ 16 ns, tRAS ≈ 32 ns, tRFC 410 ns). Because the clock ticks slower, the cycle counts are lower, but the time in nanoseconds stays the same. All-bank refresh takes about 10.5% of the time; same-bank refresh reduces that.</p>
 </section>
 
@@ -107,7 +108,7 @@ footer { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bor
     <h2><small>TABLE C</small>Energy model</h2>
     <div class="tbl"><table>
       <thead><tr><th>Memory</th><th>Array</th><th>I/O</th><th>Clock/CA</th><th>pJ/bit</th><th>vs DDR5-9600</th><th>GB/s per W</th></tr></thead>
-      <tbody><tr class=""><td>DDR5-6400 (non-ECC)</td><td>6.00</td><td>5.00</td><td>2.70</td><td><b>15.07</b></td><td>-3.5%</td><td>8.3</td></tr><tr class=""><td>DDR5-9600 (non-ECC, hypothetical)</td><td>6.00</td><td>5.50</td><td>2.70</td><td><b>15.62</b></td><td>0.0%</td><td>8.0</td></tr><tr class=""><td>DDR5-9600 ECC (80-bit)</td><td>7.50</td><td>6.88</td><td>2.70</td><td><b>18.78</b></td><td>+20.2%</td><td>6.7</td></tr><tr class="hl"><td>TDR1-9600 BL18 (with ECC)</td><td>6.35</td><td>4.62</td><td>2.07</td><td><b>14.34</b></td><td>-8.2%</td><td>8.7</td></tr><tr class="hl"><td>TDR1-9600 BL16P (no ECC)</td><td>6.00</td><td>4.10</td><td>2.07</td><td><b>13.39</b></td><td>-14.3%</td><td>9.3</td></tr></tbody></table></div>
+      <tbody><tr class=""><td>DDR5-6400 (non-ECC)</td><td>6.00</td><td>5.00</td><td>2.70</td><td><b>15.07</b></td><td>-3.5%</td><td>8.3</td></tr><tr class=""><td>DDR5-9600 (non-ECC, hypothetical)</td><td>6.00</td><td>5.50</td><td>2.70</td><td><b>15.62</b></td><td>0.0%</td><td>8.0</td></tr><tr class=""><td>DDR5-9600 ECC (80-bit)</td><td>7.50</td><td>6.88</td><td>2.70</td><td><b>18.78</b></td><td>+20.2%</td><td>6.7</td></tr><tr class="hl"><td>TDR1-9600 BL18 (with ECC)</td><td>6.35</td><td>4.62</td><td>2.07</td><td><b>14.34</b></td><td>-8.2%</td><td>8.7</td></tr><tr class="hl"><td>TDR1-9600 BL16P (no ECC)</td><td>6.00</td><td>4.10</td><td>2.07</td><td><b>13.39</b></td><td>-14.3%</td><td>9.3</td></tr><tr class="hl"><td>TDR1-10800 BL18 (with ECC)</td><td>6.35</td><td>4.77</td><td>2.07</td><td><b>14.51</b></td><td>-7.1%</td><td>8.6</td></tr><tr class=""><td>DDR5-21600 (non-ECC, hypothetical)</td><td>6.00</td><td>7.38</td><td>2.70</td><td><b>17.68</b></td><td>+13.2%</td><td>7.1</td></tr><tr class="hl"><td>TDR1-21600 BL18 (with ECC)</td><td>6.35</td><td>6.19</td><td>2.07</td><td><b>16.07</b></td><td>+2.9%</td><td>7.8</td></tr></tbody></table></div>
     <p class="note"><b>Model, not a measurement.</b> The baseline is an assumed DDR5-6400 at ±15 pJ/bit; published figures range from roughly 10 to 40 pJ/bit. TDR1 gains come from the lower clock frequency per bit, the lower I/O voltage (0.95 V) and having no extra ECC chips.</p>
   </div>
   <div style="display:grid;gap:14px;min-width:0;align-content:start">
@@ -128,5 +129,5 @@ footer { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); bor
   </ul>
 </section>
 
-<footer>TDR1 SDRAM · blueprint rev 0.1.0 · Concept design, not an existing standard. Figures come from a calculation model; assumptions are stated.</footer>
+<footer>TDR1 SDRAM · blueprint rev 0.2.0 (sheets rev 0.1.0) · Concept design, not an existing standard. Figures come from a calculation model; assumptions are stated.</footer>
 </div>
